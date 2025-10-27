@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anidle - Anime Character Guesser</title>
+    <meta name="description" content="Anidle เกมทายตัวละครอนิเมะปริศนา แรงบันดาลใจจาก Wordle ทดสอบความเป็นแฟนอนิเมะของคุณได้เลย">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <h1>Anidle</h1>
+        <div class="menu-container">
+            <button id="menu-toggle-btn"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div id="dropdown-menu" class="hidden">
+                <a href="#" id="how-to-play-btn"><i class="fas fa-question-circle"></i> How to play</a>
+                <a href="#" id="feedback-btn"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="game-container">
+        <h1>Anidle</h1> 
+        <div class="input-area">
+            <div class="input-wrapper">
+                <input type="text" id="guess-input" placeholder="Enter character name...">
+                <div id="suggestions-box"></div>
+            </div>
+            <button id="guess-button">Guess</button>
+        </div>
+
+        <div class="results-container">
+            <div class="results-header">
+                <div class="cell">Name</div>
+                <div class="cell">Anime</div>
+                <div class="cell">Gender</div>
+                <div class="cell">Hair Color</div>
+                <div class="cell">Debut Year</div>
+            </div>
+            <div id="results-grid"></div>
+        </div>
+    </div>
+
+    <audio id="bg-music" src="bgm.mp3" loop></audio>
+    <div class="volume-control">
+        <input type="range" id="volume-slider" min="0" max="100" value="50">
+        <button id="mute-button" class="mute-btn"><i class="fas fa-volume-high"></i></button>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+    <div id="win-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="win-h2">Congratulations!</h2>
+            <p>You guessed the character correctly.</p>
+            <div class="stats">
+                <p>Time: <span id="time-stat">00:00</span></p>
+                <p>Guesses: <span id="guesses-stat">0</span></p>
+            </div>
+            <button id="reset-button">Play Again</button>
+        </div>
+    </div>
+
+    <div id="how-to-play-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-modal-btn">&times;</button>
+            <h2><i class="fas fa-question-circle"></i> How to play</h2>
+            <p>Guess the mystery anime character!</p>
+            <p>Each guess will reveal clues based on 5 properties:</p>
+            <ul class="how-to-play-list">
+                <li><span class="green-box"></span> Correct property.</li>
+                <li><span class="red-box"></span> Incorrect property.</li>
+                <li><span class="yellow-box"></span> For debut year, it means you're close! (↑ higher, ↓ lower)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="feedback-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-modal-btn">&times;</button>
+            <h2><i class="fas fa-comment-dots"></i> Leave a review!</h2>
+            <form id="review-form" action="https://formspree.io/f/xjkpgwjp" method="POST">
+                <div class="rating-stars" id="rating-stars">
+                    <i class="fas fa-star star" data-value="1"></i>
+                    <i class="fas fa-star star" data-value="2"></i>
+                    <i class="fas fa-star star" data-value="3"></i>
+                    <i class="fas fa-star star" data-value="4"></i>
+                    <i class="fas fa-star star" data-value="5"></i>
+                </div>
+                <input type="hidden" name="rating" id="rating-value" value="0">
+                <textarea name="comment" placeholder="Your comments... (optional)"></textarea>
+                <button type="submit">Submit Review</button>
+            </form>
+            <p id="thank-you-message" class="hidden">Thanks for your review!</p>
+        </div>
+    </div>
+
+</body>
+</html>
