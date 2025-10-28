@@ -201,6 +201,7 @@ header h1 {
 }
 
 #how-to-play-modal .modal-content,
+
 #feedback-modal .modal-content {
     background: #2c3e50;
     color: white;
@@ -221,15 +222,18 @@ header h1 {
 }
 
 .close-modal-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 32px;
-    line-height: 1;
-    color: #aaa;
-    cursor: pointer;
+    position: absolute; 
+    top: 10px;          
+    right: 15px;         
+    
+    background: none;    
+    border: none;        
+    
+    font-size: 32px;     
+    line-height: 1;      
+    color: #aaa;         
+    cursor: pointer;     
+    padding: 0;          
 }
 
 #how-to-play-modal .close-modal-btn:hover,
@@ -259,27 +263,79 @@ header h1 {
     background-color: #0056b3;
 }
 
-#review-form textarea { width: 100%; min-height: 80px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 15px; box-sizing: border-box; }
+#review-form textarea { 
+    width: 100%; 
+    min-height: 80px; 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    font-size: 14px; 
+    margin-bottom: 15px; 
+    box-sizing: border-box; 
+}
+
 .rating-stars {
+    display: flex; 
+    justify-content: center;
     font-size: 28px;
     color: #ccc;
     cursor: pointer;
     margin-bottom: 15px;
-    
-    display: flex;
-    flex-direction: row-reverse; 
-    justify-content: center;   
 }
-.rating-stars:hover .star { color: orange; }
-.star:hover ~ .star { color: #ccc; }
-.rating-stars .star.selected, .rating-stars .star.selected ~ .star { color: orange; }
+
+.rating-stars .star:hover,
+.rating-stars .star:hover ~ .star {
+    color: #ccc; 
+}
+.rating-stars:hover .star {
+    color: orange; 
+}
+
+.rating-stars .star.selected,
+.rating-stars .star.selected ~ .star {
+    color: #ccc; 
+}
+
+.rating-stars[data-rating="1"] .star:nth-child(-n+1),
+.rating-stars[data-rating="2"] .star:nth-child(-n+2),
+.rating-stars[data-rating="3"] .star:nth-child(-n+3),
+.rating-stars[data-rating="4"] .star:nth-child(-n+4),
+.rating-stars[data-rating="5"] .star:nth-child(-n+5) {
+    color: orange;
+}
+
 #review-form button { padding: 12px 25px; background-color: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; transition: background-color 0.2s; }
 #review-form button:hover { background-color: #218838; }
 
-.how-to-play-list { list-style-type: none; padding: 0; }
-.how-to-play-list li { margin-bottom: 10px; display: flex; align-items: center; }
-.green-box, .red-box, .yellow-box { display: inline-block; width: 16px; height: 16px; margin-right: 10px; border-radius: 3px; }
-.green-box { background-color: #28a745; } .red-box { background-color: #dc3545; } .yellow-box { background-color: #ffc107; }
+.how-to-play-list { 
+    list-style-type: none; 
+    padding: 0; 
+}
+
+.how-to-play-list li { 
+    margin-bottom: 10px; 
+    display: flex; 
+    align-items: center; 
+}
+
+.green-box, .red-box, .yellow-box { 
+    display: inline-block; 
+    width: 16px; height: 16px; 
+    margin-right: 10px; 
+    border-radius: 3px; 
+}
+
+.green-box { 
+    background-color: #28a745; 
+} 
+
+.red-box { 
+    background-color: #dc3545; 
+} 
+
+.yellow-box { 
+    background-color: #ffc107; 
+}
 
 .volume-control {
     position: fixed;
@@ -330,4 +386,71 @@ header h1 {
 
 .hidden {
     display: none !important; 
+}
+
+#hint-count {
+    margin-left: auto; 
+    font-size: 12px;
+    background-color: #4f6a85;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+#give-up-modal .modal-content h2 {
+    color: #dc3545; 
+    justify-content: center;
+}
+
+.correct-answer {
+    font-size: 24px;
+    font-weight: bold;
+    color: #28a745; 
+    margin: 10px 0 20px 0;
+}
+
+.hint-message {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.confirm-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.confirm-buttons .close-modal-btn {
+    position: static;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    padding: 10px 20px;
 }

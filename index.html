@@ -17,6 +17,8 @@
             <div id="dropdown-menu" class="hidden">
                 <a href="#" id="how-to-play-btn"><i class="fas fa-question-circle"></i> How to play</a>
                 <a href="#" id="feedback-btn"><i class="fas fa-comment-dots"></i> Feedback</a>
+                <a href="#" id="hint-btn"><i class="fas fa-lightbulb"></i> Hint <span id="hint-count"></span></a>
+                <a href="#" id="give-up-btn"><i class="fas fa-flag"></i> Give up</a>
             </div>
         </div>
     </header>
@@ -64,6 +66,18 @@
         </div>
     </div>
 
+    <div id="give-up-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="give-up-h2">Game Over!</h2>
+            <p>The correct character was:</p>
+            <p id="correct-answer-text" class="correct-answer"></p>
+            <div class="stats">
+                <p>Guesses: <span id="guesses-stat-lost">0</span></p>
+            </div>
+            <button class="close-modal-btn">Close</button>
+        </div>
+    </div>
+
     <div id="how-to-play-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <button class="close-modal-btn">&times;</button>
@@ -95,6 +109,26 @@
                 <button type="submit">Submit Review</button>
             </form>
             <p id="thank-you-message" class="hidden">Thanks for your review!</p>
+        </div>
+    </div>
+
+    <div id="hint-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-modal-btn">&times;</button>
+            <h2><i class="fas fa-lightbulb"></i> Hint</h2>
+            <p id="hint-text" class="hint-message"></p>
+        </div>
+    </div>
+
+    <div id="confirm-give-up-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-modal-btn">&times;</button>
+            <h2><i class="fas fa-flag"></i> Give up</h2>
+            <p>Are you sure you want to give up and see the answer?</p>
+            <div class="confirm-buttons">
+                <button id="confirm-give-up-btn" class="btn-danger">Yes, Give up</button>
+                <button class="close-modal-btn btn-secondary">Cancel</button>
+            </div>
         </div>
     </div>
 

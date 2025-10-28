@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownMenu = document.getElementById('dropdown-menu');
     const howToPlayBtn = document.getElementById('how-to-play-btn');
     const feedbackBtn = document.getElementById('feedback-btn');
+    const giveUpModal = document.getElementById('give-up-modal');
+    const hintBtn = document.getElementById('hint-btn');
+    const giveUpBtn = document.getElementById('give-up-btn');
 
     const winModal = document.getElementById('win-modal'); 
     const howToPlayModal = document.getElementById('how-to-play-modal');
@@ -18,14 +21,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeStat = document.getElementById('time-stat');
     const guessesStat = document.getElementById('guesses-stat');
     const resetButton = document.getElementById('reset-button');
+    const correctAnswerText = document.getElementById('correct-answer-text');
+    const guessesStatLost = document.getElementById('guesses-stat-lost');
 
     const bgMusic = document.getElementById('bg-music');
     const muteButton = document.getElementById('mute-button');
     const volumeSlider = document.getElementById('volume-slider');
 
+    const hintModal = document.getElementById('hint-modal');
+    const hintText = document.getElementById('hint-text');
+    const confirmGiveUpModal = document.getElementById('confirm-give-up-modal');
+    const confirmGiveUpBtn = document.getElementById('confirm-give-up-btn');
+    const closeLostModalBtn = document.getElementById('close-lost-modal-btn');
+
     let guessCount = 0;
     let startTime;
     let secretCharacter;
+    let hintsUsed = 0;
+    let availableHints = [];
 
     function startGame() {
         const randomIndex = Math.floor(Math.random() * characters.length);
@@ -34,6 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
         guessCount = 0;
         startTime = new Date();
         if(bgMusic) bgMusic.volume = 0.5; 
+        hintsUsed = 0;
+        availableHints = ['hairColor', 'firstAppearanceYear', 'anime'];
+        document.getElementById('hint-count').textContent = `(${availableHints.length})`;
+        hintBtn.disabled = false;
+        giveUpBtn.disabled = false;
     }
 
     function createCell(text, isCorrect) {
@@ -95,15 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             guessInput.disabled = true;
             guessButton.disabled = true;
+            hintBtn.disabled = true;    
+            giveUpBtn.disabled = true;  
         }
     }
 
     function resetGame() {
         winModal.classList.add('hidden'); 
+        giveUpModal.classList.add('hidden');
         resultsGrid.innerHTML = '';
         guessInput.disabled = false;
         guessButton.disabled = false;
         guessInput.value = '';
+        giveUpBtn.disabled = false;
         startGame();
     }
 
@@ -160,11 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
         star.addEventListener('click', () => {
             const value = star.getAttribute('data-value');
             ratingValueInput.value = value;
-            stars.forEach(s => s.classList.remove('selected'));
-            star.classList.add('selected');
+
+            // --- เพิ่มบรรทัดนี้เข้ามา ---
+            // บอก CSS ว่าตอนนี้เลือกกี่ดาวแล้ว
+            star.parentElement.setAttribute('data-rating', value);
         });
     });
-
     reviewForm.addEventListener('submit', (event) => {
         event.preventDefault();
         
@@ -185,9 +208,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+    hintBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        giveHint();
+        dropdownMenu.classList.add('hidden'); 
+    });
+
+    giveUpBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        dropdownMenu.classList.add('hidden'); 
+        confirmGiveUpModal.classList.remove('hidden'); 
+    });
+
+    confirmGiveUpBtn.addEventListener('click', () => {
+        confirmGiveUpModal.classList.add('hidden'); 
+        showGiveUpScreen(); 
+    });
+
+    function giveHint() {
+        if (availableHints.length > 0) {
+            const hintIndex = Math.floor(Math.random() * availableHints.length);
+            const hintProperty = availableHints[hintIndex];
+            const hintValue = secretCharacter[hintProperty];
+            let hintMessage = "";
+            if (hintProperty === 'hairColor') {
+                hintMessage = `The character's hair color is <strong>${hintValue}</strong>.`;
+            } else if (hintProperty === 'firstAppearanceYear') {
+                hintMessage = `The character first appeared in <strong>${hintValue}</strong>.`;
+            } else if (hintProperty === 'anime') {
+                hintMessage = `Final Hint: The anime is <strong>${hintValue}</strong>!`;
+            }
+            hintText.innerHTML = hintMessage; 
+            hintModal.classList.remove('hidden');
+            availableHints.splice(hintIndex, 1);
+            document.getElementById('hint-count').textContent = `(${availableHints.length})`;
+            if (availableHints.length === 0) {
+                hintBtn.disabled = true;
+            }
+        }
+    }
+
+    function showGiveUpScreen() {
+        correctAnswerText.textContent = secretCharacter.name;
+        guessesStatLost.textContent = guessCount;
+        giveUpModal.classList.remove('hidden');
+        guessInput.disabled = true;
+        guessButton.disabled = true;
+        hintBtn.disabled = true;
+        giveUpBtn.disabled = true;
+    }
+
     closeModalBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            btn.closest('.modal-overlay').classList.add('hidden');
+            const modal = btn.closest('.modal-overlay');
+            modal.classList.add('hidden');
+            if (modal.id === 'give-up-modal') {
+                resetGame();
+            }
         });
     });
 
@@ -219,6 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.key === 'Enter') handleGuess();
     });
     resetButton.addEventListener('click', resetGame);
-
+    
     startGame();
 });
