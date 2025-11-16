@@ -183,8 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const value = star.getAttribute('data-value');
             ratingValueInput.value = value;
 
-            // --- เพิ่มบรรทัดนี้เข้ามา ---
-            // บอก CSS ว่าตอนนี้เลือกกี่ดาวแล้ว
             star.parentElement.setAttribute('data-rating', value);
         });
     });
